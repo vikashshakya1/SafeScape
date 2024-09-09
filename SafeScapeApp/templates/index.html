@@ -1,0 +1,172 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafeScape - Stay Informed. Stay Safe.</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <!-- Leaflet CSS for the map -->
+    <link rel="stylesheet" href="{% static 'css/leaflet.css' %}" />
+    <link rel="icon" href="{% static 'images/icon.webp' %}" type="image/webp">
+
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="navbar">
+            <a href="{% url 'Home' %}" class="logo" aria-label="SafeScape Home">
+                <span class="website-name">SafeScape</span> <!-- Website name added here -->
+            </a>
+            <nav aria-label="Main Navigation">
+                <ul class="nav-list">
+                    <li><a href="{% url 'Home' %}">Home</a></li>
+                    <li><a href="{% url 'About' %}">About</a></li>
+                    <li><a href="{% url 'Services' %}">Services</a></li>
+                    <li><a href="{% url 'Contact_Us' %}">Contact</a></li>
+                    <li><a href="{% url 'Crime_Forecasting' %}">Crime Forecast</a></li>
+                    <li><a href="#">Crime Stats</a></li>
+                    <li><a href="#">Risk Assessment</a></li>
+                </ul>
+            </nav>
+            <div class="login-buttons">
+                <button class="login-btn" aria-label="Login to SafeScape">Login</button>
+                <button class="login-btn" aria-label="Register for SafeScape">Register</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" aria-labelledby="hero-heading">
+        <h1 id="hero-heading">Stay Informed. Stay Safe.</h1>
+        <p>Your trusted source for crime updates and safety tips.</p>
+        <button class="cta-btn" aria-label="Get Started with SafeScape">Get Started</button>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard" aria-labelledby="dashboard-heading">
+        <h2 id="dashboard-heading">Dashboard</h2>
+        <div id="dashboard">
+            <div id="crime-stats">
+                <h3>Crime Statistics</h3>
+                <div id="total-crimes">Total Crimes: 0</div>
+                <div id="crime-rate">Crime Rate: 0%</div>
+            </div>
+            <canvas id="crime-chart"></canvas>
+            <canvas id="forecast-chart"></canvas>
+        </div>
+    </section>
+
+    <!-- Crime Category Section -->
+    <section class="crime-category" aria-labelledby="crime-category-heading">
+        <h2 id="crime-category-heading">Select Crime Category:</h2>
+        <label for="crime-category" class="visually-hidden">Choose crime category</label>
+        <select id="crime-category" aria-describedby="crime-category-heading">
+            <option value="">All</option>
+            <option value="theft">Theft</option>
+            <option value="fraud">Fraud</option>
+            <option value="violence">Violence</option>
+            <option value="cyber">Cyber Crime</option>
+        </select>
+    </section>
+
+    <!-- Trending News Section -->
+    <section class="trending-news" aria-labelledby="news-heading">
+        <h2 id="news-heading">Trending News</h2>
+        <div class="carousel-container news-carousel">
+            <button class="arrow-btn news-left" aria-label="Scroll left">&larr;</button>
+            <div class="carousel-content">
+                <div class="carousel-items" id="news-container">
+                    <!-- News articles will be populated here -->
+                </div>
+            </div>
+            <button class="arrow-btn news-right" aria-label="Scroll right">&rarr;</button>
+        </div>
+    </section>
+
+    <!-- Detailed News Section -->
+    <section id="news-detail" style="display: none;">
+        <!-- Detailed news content will be inserted here -->
+    </section>
+
+    <!-- Crime Podcasts Section -->
+    <section class="crime-podcasts" aria-labelledby="podcast-heading">
+        <h2 id="podcast-heading">Explore Crime Podcasts</h2>
+        <div class="carousel-container podcast-carousel">
+            <button class="arrow-btn podcast-left" aria-label="Scroll left">&larr;</button>
+            <div class="carousel-content">
+                <ul id="podcast-list">
+                    <!-- Podcast items will be populated here -->
+                </ul>
+            </div>
+            <button class="arrow-btn podcast-right" aria-label="Scroll right">&rarr;</button>
+        </div>
+    </section>
+
+    <!-- Latest Investigations Section -->
+    <section class="latest-investigations" aria-labelledby="investigation-heading">
+        <h2 id="investigation-heading">Latest Investigations</h2>
+        <div class="carousel-container investigation-carousel">
+            <button class="arrow-btn investigation-left" aria-label="Scroll left">&larr;</button>
+            <div class="carousel-content">
+                <div class="carousel-items" id="investigation-container">
+                    <!-- Investigation items will be populated here -->
+                </div>
+            </div>
+            <button class="arrow-btn investigation-right" aria-label="Scroll right">&rarr;</button>
+        </div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section class="interactive-map" aria-labelledby="map-heading">
+        <h2 id="map-heading">Interactive Crime Map</h2>
+        <div id="map" class="map-container"></div>
+    </section>
+
+    <!-- User Interaction Section -->
+    <section class="user-interaction" aria-labelledby="interaction-heading">
+        <h2 id="interaction-heading">User Interaction</h2>
+        <div id="user-interactions">
+            <input type="text" id="search-location" placeholder="Search for a location..." aria-label="Search location">
+            <button id="set-alert" aria-label="Set up alerts for selected area">Set Alert</button>
+            <button id="generate-report" aria-label="Generate custom report">Generate Report</button>
+        </div>
+    </section>
+
+    <!-- Incident Reporting Section -->
+    <section class="incident-reporting" aria-labelledby="report-heading">
+        <h2 id="report-heading">Report an Incident</h2>
+        <form id="report-incident">
+            <input type="text" name="location" placeholder="Incident Location" aria-label="Incident location">
+            <textarea name="description" placeholder="Describe the incident" aria-label="Describe the incident"></textarea>
+            <button type="submit" aria-label="Submit incident report">Report Incident</button>
+        </form>
+    </section>
+
+    <!-- Law Enforcement Tools Section -->
+    <section class="law-enforcement-tools" aria-labelledby="law-enforcement-heading">
+        <h2 id="law-enforcement-heading">Law Enforcement Tools</h2>
+        <div id="law-enforcement-tools">
+            <!-- Detailed analytics and case management interface will be implemented here -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 SafeScape. All rights reserved.</p>
+        <nav aria-label="Footer Navigation">
+            <ul class="footer-nav">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="{% url 'Contact_Us' %}">Contact</a></li>
+            </ul>
+        </nav>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="{% static 'js/app.js' %}"></script>
+</body>
+</html>

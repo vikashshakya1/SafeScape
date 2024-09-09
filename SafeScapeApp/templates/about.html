@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Your Website</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <header>
+        <div class="navbar">
+            <a href="#" class="logo" aria-label="SafeScape Home">
+                <img src="{% static 'images/icon.webp' %}" alt="SafeScape Logo">
+
+                <span class="website-name">SafeScape</span>
+            </a>
+            <nav aria-label="Main Navigation">
+                <ul class="nav-list">
+                    <li><a href="{% url 'Home' %}">Home</a></li>
+                    <li><a href="{% url 'About' %}">About</a></li>
+                    <li><a href="{% url 'Services' %}">Services</a></li>
+                    <li><a href="{% url 'Contact_Us' %}">Contact</a></li>
+                    <li><a href="{% url 'Crime_Forecasting' %}">Crime Forecast</a></li>
+                    <li><a href="#">Crime Stats</a></li>
+                    <li><a href="#">Risk Assessment</a></li>
+                </ul>
+            </nav>
+            <div class="login-buttons">
+                <button class="login-btn" aria-label="Login to SafeScape">Login</button>
+                <button class="login-btn" aria-label="Register for SafeScape">Register</button>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <section id="about">
+            <h1>About Us</h1>
+            <p class="tagline">"Unveiling Crime Patterns, Empowering Communities"</p>
+            <p>Are you tired of feeling unsafe in your neighborhood? Our innovative web application is designed to shed light on crime trends, providing you with the knowledge and tools to make informed decisions about your safety.</p>
+            <p>How does it work? By analyzing vast amounts of crime data, our application identifies patterns, visualizes hotspots, and offers actionable insights. Whether you're a concerned resident, a researcher seeking to understand crime dynamics, or a law enforcement professional looking for data-driven strategies, our platform empowers you to take proactive steps towards a safer community.</p>
+            <h2>Key Features</h2>
+            <ul>
+                <li>Interactive crime maps: Visualize crime incidents and trends in real-time.</li>
+                <li>Detailed analytics: Gain insights into crime types, hotspots, and temporal patterns.</li>
+                <li>Personalized safety alerts: Receive notifications about crime incidents in your area.</li>
+                <li>Data-driven recommendations: Discover effective crime prevention strategies.</li>
+            </ul>
+            <p>Join us in creating a safer, more informed community. Explore our platform today!</p>
+        </section>
+        
+        <section id="mission">
+            <h2>Our Mission</h2>
+            <p>We are dedicated to providing comprehensive and up-to-date information on crime and safety. Our mission is to keep our community informed and safe through accurate reporting and analysis.</p>
+        </section>
+        
+        <section id="youtube-videos">
+            <h2>Featured Videos</h2>
+            <div class="video-column">
+                <div class="video">
+                    <h3>Crime Investigation 1</h3>
+                    <iframe src="https://www.youtube.com/embed/atWeVH6Dyrc" frameborder="0" allowfullscreen></iframe>
+                </div>
+                <div class="video">
+                    <h3>Crime Investigation 2</h3>
+                    <iframe src="https://www.youtube.com/embed/Vtkv3-endYc" frameborder="0" allowfullscreen></iframe>
+                </div>
+            </div>
+        </section>
+        
+        <section id="team">
+            <h2>Meet the Team</h2>
+            <div class="team-member">
+                <img src="{% static 'images/team1.jpg' %}" alt="Suraj Mishra">
+
+                <h3>Suraj Mishra</h3>
+                <p>Suraj has practical experience in data collection, preprocessing, analysis, modeling, and visualization.</p>
+            </div>
+            <div class="team-member">
+                <img src="https://media.licdn.com/dms/image/v2/D4D03AQEA7y4EVCswdg/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1685174537696?e=1731542400&v=beta&t=BkYVQK_VdihlmSx8A4XTBDgH41hdrWbTS_DEvDfiSe8" alt="Vikash Shakya">
+                <h3>Vikash Shakya</h3>
+                <p>Vikash has a solid understanding of statistics and expertise in Python, R, and Database Management.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Your Website. All rights reserved.</p>
+        <ul>
+            <li><a href="{% url 'Home' %}">Home</a></li>
+            <li><a href="{% url 'Services' %}">Services</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </footer>
+</body>
+</html>
