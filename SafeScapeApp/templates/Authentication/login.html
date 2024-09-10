@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url("{% static 'images/Police.jpg' %}") no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 500px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .login-btn {
+            background-color: #3498db;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .law-btn {
+            background-color: #8e44ad;
+        }
+
+        .law-btn:hover {
+            background-color: #7a3a99;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 500px) {
+            .btn-container {
+                flex-direction: column;
+            }
+
+            .login-btn {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Welcome to SafeScape</h1>
+        <p>Please choose your login type</p>
+
+        <div class="btn-container">
+            <!-- Civilian Login -->
+            <a href="{% url 'CivilianLogin' %}" class="login-btn law-btn">Login as Civilian</a>
+
+            <!-- Law Enforcement Login -->
+            <a href="{% url 'LawEnforcementLogin' %}" class="login-btn law-btn">Login as Law Enforcement</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

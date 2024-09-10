@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Crime</title>
+    <link rel="shortcut icon" href="img/fav.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            padding: 20px;
+            background-color: #ffffff56;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container-bg {
+            background-image: url('img/black\ community.jpeg');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            scroll-behavior: smooth;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            width: 100%;
+        }
+
+        /* Table styles */
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        thead {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-delete, .btn-update {
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            color: white;
+            margin-bottom: 3px;
+        }
+
+        .btn-delete {
+            background-color: #ff4444;
+        }
+
+        .btn-update {
+            background-color: #007bff;
+        }
+
+        @media (min-width: 320px) {
+            .container-bg {
+                background-image: url('img/black\ community.jpeg');
+            background-size: cover;
+            background-position: center;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            scroll-behavior: smooth;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-bg">
+        <div class="container">
+            <h2>Report Crime</h2>
+            <div class="row">
+                <!-- Crime Report Form -->
+                <div class="col-md-6">
+                    <form>
+                        <div class="form-group">
+                            <label for="crimeType">Type of Crime</label>
+                            <select class="form-control" id="crimeType" required>
+                                <option value="" selected disabled>Select type of crime</option>
+                                <option value="Theft">Theft</option>
+                                <option value="Assault">Assault</option>
+                                <option value="Burglary">Burglary</option>
+                                <option value="Robbery">Robbery</option>
+                                <option value="Vandalism">Vandalism</option>
+                                <option value="Kidnap">Kidnap</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="crimeDescription">Description</label>
+                            <textarea class="form-control" id="crimeDescription" rows="5" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" class="form-control" id="location" required>
+                        </div>
+                        <!-- Image Upload -->
+                        <div class="form-group">
+                            <label for="crimeImage">Upload Evidence</label>
+                            <input type="file" class="form-control-file" id="crimeEvidence">
+                        </div>
+                        <!-- Map Frame -->
+                        <!-- <div id="map"></div>
+                        <button type="submit" class="btn btn-primary">Submit Report</button> -->
+                    </form>
+                </div>
+                <!-- Crime Report Table -->
+                <div class="col-md-6">
+                    <h2>Reported Crimes</h2>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Type of Crime</th>
+                                    <th>Date Created</th>
+                                    <th>Time Created</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Theft</td>
+                                    <td>2024-02-13</td>
+                                    <td>15:30:25</td>
+                                    <td>Under Investigation</td>
+                                    <td class="actions">
+                                        <button class="btn-delete">Delete</button>
+                                        <button class="btn-update">Update</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Assault</td>
+                                    <td>2024-02-14</td>
+                                    <td>10:45:10</td>
+                                    <td>Open</td>
+                                    <td class="actions">
+                                        <button class="btn-delete">Delete</button>
+                                        <button class="btn-update">Update</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Burglary</td>
+                                    <td>2024-02-15</td>
+                                    <td>18:20:35</td>
+                                    <td>Closed</td>
+                                    <td class="actions">
+                                        <button class="btn-delete">Delete</button>
+                                        <button class="btn-update">Update</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Map API -->
+    <script>
+        // You can add your JavaScript for the map here
+    </script>
+</body>
+</html>

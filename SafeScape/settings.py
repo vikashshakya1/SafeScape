@@ -58,13 +58,12 @@ WSGI_APPLICATION = 'SafeScape.wsgi.application'
 # Database configuration
 DATABASES = {
     'default': {
-        'ENGINE': 'djongo',
-        'NAME': 'safescapedb',
-        'ENFORCE_SCHEMA': False,
-        'CLIENT': {
-            'host': 'localhost',
-            'port': 27017,
-        },
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME':'SafeScapedb',
+        'USER':'postgres',
+        'PASSWORD':'Heisenberg',
+        'HOST':'localhost'
+
     }
 }
 
@@ -100,4 +99,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+AUTH_USER_MODEL = 'account.User'
 

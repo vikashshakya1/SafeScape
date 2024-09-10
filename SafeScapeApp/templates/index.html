@@ -28,13 +28,21 @@
                     <li><a href="{% url 'Crime_Forecasting' %}">Crime Forecast</a></li>
                     <li><a href="#">Crime Stats</a></li>
                     <li><a href="#">Risk Assessment</a></li>
+                    {% comment %} <li><a href="#">Law Enforcement</a></li> {% endcomment %}
                 </ul>
             </nav>
             <div class="login-buttons">
-                <button class="login-btn" aria-label="Login to SafeScape">Login</button>
-                <button class="login-btn" aria-label="Register for SafeScape">Register</button>
+                <!-- Link to the login page -->
+                <a href="{% url 'Login' %}">
+                    <button class="login-btn" aria-label="Login to SafeScape">Login</button>
+                </a>
+            
+                <!-- Link to the register page -->
+                <a href="{% url 'Register' %}">
+                    <button class="login-btn" aria-label="Register for SafeScape">Register</button>
+                </a>
             </div>
-        </div>
+            
     </header>
 
     <!-- Hero Section -->
@@ -46,7 +54,7 @@
 
     <!-- Dashboard Section -->
     <section class="dashboard" aria-labelledby="dashboard-heading">
-        <h2 id="dashboard-heading">Dashboard</h2>
+        <h2 id="dashboard-heading">Crime Stats</h2>
         <div id="dashboard">
             <div id="crime-stats">
                 <h3>Crime Statistics</h3>
@@ -144,7 +152,7 @@
         </form>
     </section>
 
-    <!-- Law Enforcement Tools Section -->
+     <!-- Law Enforcement Tools Section -->
     <section class="law-enforcement-tools" aria-labelledby="law-enforcement-heading">
         <h2 id="law-enforcement-heading">Law Enforcement Tools</h2>
         <div id="law-enforcement-tools">

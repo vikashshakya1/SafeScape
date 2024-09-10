@@ -1,73 +1,121 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login / Register</title>
-    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <title>Registration Page</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url("{% static 'images/Police.jpg' %}") no-repeat center center/cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+            border-radius: 15px;
+            padding: 40px;
+            max-width: 500px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .login-btn {
+            background-color: #3498db;
+            border: none;
+            color: white;
+            padding: 15px 30px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease; /* Added transition for transform */
+            margin: 10px;
+        }
+
+        .login-btn:hover {
+            background-color: #2980b9;
+        }
+
+        .law-btn {
+            background-color: #8e44ad;
+        }
+
+        .law-btn:hover {
+            background-color: #7a3a99;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 500px) {
+            .btn-container {
+                flex-direction: column;
+            }
+
+            .login-btn {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
 </head>
+
 <body>
-    <div class="login-wrap">
-        <div class="login-html">
-            <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-            <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
-            <div class="login-form">
-                <div class="sign-in-htm">
-                    <form method="post" action="{% url 'login' %}">
-                        {% csrf_token %}
-                        <div class="group">
-                            <label for="username" class="label">Username</label>
-                            <input id="username" name="username" type="text" class="input" value="{{ form.username.value }}">
-                        </div>
-                        <div class="group">
-                            <label for="password" class="label">Password</label>
-                            <input id="password" name="password" type="password" class="input" data-type="password">
-                        </div>
-                        <div class="group">
-                            <input id="check" name="remember_me" type="checkbox" class="check">
-                            <label for="check"><span class="icon"></span> Keep me Signed in</label>
-                        </div>
-                        <div class="group">
-                            <input type="submit" class="button" value="Sign In">
-                        </div>
-                        <div class="hr"></div>
-                        <div class="foot-lnk">
-                            <a href="{% url 'forgot_password' %}">Forgot Password?</a>
-                        </div>
-                    </form>
-                </div>
-                <div class="sign-up-htm">
-                    <form method="post" action="{% url 'register' %}">
-                        {% csrf_token %}
-                        <div class="group">
-                            <label for="username" class="label">Username</label>
-                            <input id="username" name="username" type="text" class="input" value="{{ form.username.value }}">
-                        </div>
-                        <div class="group">
-                            <label for="password1" class="label">Password</label>
-                            <input id="password1" name="password1" type="password" class="input" data-type="password">
-                        </div>
-                        <div class="group">
-                            <label for="password2" class="label">Repeat Password</label>
-                            <input id="password2" name="password2" type="password" class="input" data-type="password">
-                        </div>
-                        <div class="group">
-                            <label for="email" class="label">Email Address</label>
-                            <input id="email" name="email" type="text" class="input" value="{{ form.email.value }}">
-                        </div>
-                        <div class="group">
-                            <input type="submit" class="button" value="Sign Up">
-                        </div>
-                        <div class="hr"></div>
-                        <div class="foot-lnk">
-                            <label for="tab-1">Already Member?</label>
-                        </div>
-                    </form>
-                </div>
-            </div>
+
+    <div class="container">
+        <h1>Welcome to SafeScape</h1>
+        <p>Please choose your Registration Type</p>
+
+        <div class="btn-container">
+            <!-- Civilian Login -->
+            <a href="{% url 'CivilianRegister' %}" class="login-btn law-btn">Register as Civilian</a>
+
+            <!-- Law Enforcement Login -->
+            <a href="{% url 'LawEnforcementRegister' %}" class="login-btn law-btn">Register as Law Enforcement</a>
         </div>
     </div>
+
+    <script>
+        document.querySelectorAll('.login-btn').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.95)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+            });
+            btn.addEventListener('mouseleave', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+    </script>
 </body>
+
 </html>

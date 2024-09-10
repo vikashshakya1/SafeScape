@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Law Enforcement Dashboard</title>
+    <link rel="shortcut icon" href="img/fav.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff59;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container-bg {
+            background-image: url('img/black\ community.jpeg');
+            background-size: cover;
+            background-position: center;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #f2f2f234;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        #map {
+            height: 300px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-bg">
+        <div class="container">
+            <h2>Law Enforcement Dashboard</h2>
+            
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Reported Crimes</h5>
+                    <p class="card-text">View and manage reported crimes in the area.</p>
+                    <a href="LawEnforcementCrimeView.html" class="btn btn-primary">View Reported Crimes</a>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Suspected Criminals</h5>
+                    <p class="card-text">Access information about suspected criminals and ongoing investigations.</p>
+                    <a href="#" class="btn btn-primary">View Suspected Criminals</a>
+                </div>
+            </div>
+
+            <h5>Map Section</h5>
+            <div id="map"></div>
+
+            <!-- Profile Section -->
+            <div class="card">
+                <div class="card-header">
+                    Profile
+                </div>
+                <div class="card-body">
+                    <p>View and update your profile information.</p>
+                    <a href="LawEnforcementProfile.html" class="btn btn-primary">View Profile</a>
+                </div>
+            </div>
+    
+            <!-- Logout Button -->
+            <a href="index.html" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+    <!-- Map -->
+    <script>
+        
+    </script>
+</body>
+</html>

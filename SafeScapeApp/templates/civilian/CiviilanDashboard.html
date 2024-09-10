@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Reporting Dashboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            background-color: #343a40;
+            color: white;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            color: white;
+            padding: 15px 0;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 15px;
+            text-decoration: none;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #495057;
+        }
+
+        .sidebar a i {
+            margin-right: 10px;
+        }
+
+        /* Main content styles */
+        .main-content {
+            margin-left: 250px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            min-height: 100vh;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .dashboard-header .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .dashboard-header .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* Cards */
+        .card-container {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 24%;
+            text-align: center;
+            position: relative;
+        }
+
+        .card .settings-icon {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #6c757d;
+            cursor: pointer;
+        }
+
+        .card h3 {
+            font-size: 22px;
+            margin: 15px 0;
+        }
+
+        .card p {
+            font-size: 14px;
+            margin: 0;
+        }
+
+        /* Placeholder chart */
+        .chart-container {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .bar-chart {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            height: 300px;
+            margin-top: 20px;
+        }
+
+        .bar {
+            width: 8%;
+            background-color: #007bff;
+            text-align: center;
+            color: white;
+            font-size: 14px;
+        }
+
+
+        .wrapper {
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: white;
+            padding: 15px;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #444;
+            border-radius: 4px;
+        }
+
+        .sidebar a:hover {
+            background-color: #555;
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Crime Reporting</h2>
+        <a href="#" data-section="dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+        <div class="form-management">
+            <h4>Form Management</h4>
+            <a href="#" data-section="crime-info"><i class="fas fa-folder"></i> Crime Information</a>
+            <a href="#" data-section="police-info"><i class="fas fa-user-shield"></i> Police Officer Information</a>
+            <a href="#" data-section="response-info"><i class="fas fa-clipboard-list"></i> Response Information</a>
+            <a href="#" data-section="resident-info"><i class="fas fa-users"></i> Resident Information</a>
+            <a href="#" data-section="user-info"><i class="fas fa-user"></i> User</a>
+        </div>
+        <a href="#" data-section="resident-credential"><i class="fas fa-file-alt"></i> Resident Credential</a>
+        <a href="#" data-section="database"><i class="fas fa-database"></i> Database Backup/Restore</a>
+        <a href="#" data-section="crime-category"><i class="fas fa-folder-open"></i> Crime Category Encoding</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <div id="dashboard">
+            <div class="dashboard-header">
+                <h1>Dashboard</h1>
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/40" alt="User Profile">
+                    <p>John Doe</p>
+                </div>
+            </div>
+
+            <div class="card-container">
+                <div class="card">
+                    <div class="settings-icon"><i class="fas fa-cog"></i></div>
+                    <h3>10468</h3>
+                    <p>Total Crimes Reported</p>
+                </div>
+                <div class="card">
+                    <div class="settings-icon"><i class="fas fa-cog"></i></div>
+                    <h3>10468</h3>
+                    <p>Total Police Officers</p>
+                </div>
+                <div class="card">
+                    <div class="settings-icon"><i class="fas fa-cog"></i></div>
+                    <h3>111</h3>
+                    <p>Total Crimes Solved</p>
+                </div>
+                <div class="card">
+                    <div class="settings-icon"><i class="fas fa-cog"></i></div>
+                    <h3>111</h3>
+                    <p>Total Crimes Ongoing</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>Crimes Reported</h3>
+                <div class="bar-chart">
+                    <div class="bar" style="height: 20%;">Jan</div>
+                    <div class="bar" style="height: 30%;">Feb</div>
+                    <div class="bar" style="height: 15%;">Mar</div>
+                    <div class="bar" style="height: 50%;">Apr</div>
+                    <div class="bar" style="height: 70%;">May</div>
+                    <div class="bar" style="height: 20%;">Jun</div>
+                    <div class="bar" style="height: 90%;">Jul</div>
+                    <div class="bar" style="height: 40%;">Aug</div>
+                    <div class="bar" style="height: 60%;">Sep</div>
+                    <div class="bar" style="height: 80%;">Oct</div>
+                    <div class="bar" style="height: 50%;">Nov</div>
+                    <div class="bar" style="height: 100%;">Dec</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Placeholder sections for content -->
+        <!-- Crime Information Section -->
+        <div id="crime-info" style="display:none;">
+            <h2>Crime Information</h2>
+
+            <!-- List of Previously Reported Crimes -->
+            <div id="reported-crimes">
+                <h3>Previously Reported Crimes</h3>
+                <ul id="crime-list">
+                    <li>Crime 1: Burglary reported on 01/01/2024</li>
+                    <li>Crime 2: Vandalism reported on 02/14/2024</li>
+                    <!-- More crimes can be listed here -->
+                </ul>
+            </div>
+
+            <!-- Form to Report a New Crime -->
+            <div id="new-crime-form">
+                <h3>Report a New Crime</h3>
+                <form id="crimeForm">
+                    <div class="form-group">
+                        <label for="crime-type">Type of Crime:</label>
+                        <input type="text" id="crime-type" class="form-control" placeholder="Enter type of crime">
+                    </div>
+                    <div class="form-group">
+                        <label for="crime-location">Location:</label>
+                        <input type="text" id="crime-location" class="form-control" placeholder="Enter location">
+                    </div>
+                    <div class="form-group">
+                        <label for="crime-date">Date:</label>
+                        <input type="date" id="crime-date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="crime-description">Description:</label>
+                        <textarea id="crime-description" class="form-control" rows="4"
+                            placeholder="Enter description"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div id="profile" style="display:none;">
+            <h2>Profile</h2>
+            <p>View and update your profile information.</p> 
+            
+        </div>
+    </div>
+    </div>
+
+
+    <div id="police-info" style="display:none;">
+        <h2>Police Officer Information</h2>
+        <p>Details about the police officers.</p>
+    </div>
+
+    <div id="response-info" style="display:none;">
+        <h2>Response Information</h2>
+        <p>Details about the response times and protocols.</p>
+    </div>
+
+    <div id="resident-info" style="display:none;">
+        <h2>Resident Information</h2>
+        <p>Details about the residents and demographics.</p>
+    </div>
+
+    <div id="user-info" style="display:none;">
+        <h2>User Information</h2>
+        <p>User profile and settings.</p>
+    </div>
+
+    <div id="resident-credential" style="display:none;">
+        <h2>Resident Credential</h2>
+        <p>Details about resident credentials and access levels.</p>
+    </div>
+
+    <div id="database" style="display:none;">
+        <h2>Database Backup/Restore</h2>
+        <p>Backup and restore operations for the database.</p>
+    </div>
+
+    <div id="crime-category" style="display:none;">
+        <h2>Crime Category Encoding</h2>
+        <p>Categories of crimes and their encodings.</p>
+    </div>
+    </div>
+
+    <script>
+        // JavaScript to handle dynamic content loading
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('data-section');
+
+                document.querySelectorAll('.main-content > div').forEach(section => {
+                    section.style.display = 'none';
+                });
+
+                document.getElementById(sectionId).style.display = 'block';
+            });
+        });
+
+        // Initially show the dashboard
+        document.getElementById('dashboard').style.display = 'block';
+
+        // Form submission logic
+        document.getElementById('crimeForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Handle form submission logic here
+            alert('Crime reported successfully!');
+        });
+    </script>
+</body>
+
+</html>

@@ -15,3 +15,21 @@ def crime_forecasting(request):
 
 def services(request):
     return render(request, 'services.html')
+
+def Login(request):
+    return render(request, 'Authentication/Login.html')
+
+def Register(request):
+    return render(request, 'Authentication/Register.html')
+
+def CivilianRegister(request):
+    return render(request, 'civilian/CivilanRegistration.html')
+
+def Civilianlogin(request):
+    return render(request, 'civilian/CivilanLogin.html')
+
+def LawEnforcementLogin(request):
+    return render(request,'LawEnforcement/LawEnforcementLogin.html')
+
+def LawEnforcementRegister(request):
+    return render(request,'LawEnforcement/LawEnforcementSignUp.html')

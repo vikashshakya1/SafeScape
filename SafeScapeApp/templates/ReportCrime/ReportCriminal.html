@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Suspected Criminal</title>
+    <link rel="shortcut icon" href="img/fav.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            width: 100%;
+        }
+
+        #map {
+            height: 300px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Report Suspected Criminal</h2>
+        
+        <form>
+            <div class="form-group">
+                <label for="suspectName">Suspect's Name</label>
+                <input type="text" class="form-control" id="suspectName">
+            </div>
+            <div class="form-group">
+                <label for="suspectDescription">Description</label>
+                <textarea class="form-control" id="suspectDescription" rows="5" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="location">Location</label>
+                <input type="text" class="form-control" id="location" required>
+            </div>
+            <!-- Image Upload -->
+            <div class="form-group">
+                <label for="suspectImage">Upload Image</label>
+                <input type="file" class="form-control-file" id="suspectImage">
+            </div>
+            <!-- Map Frame -->
+            <div id="map"></div>
+            <button type="submit" class="btn btn-primary">Submit Report</button>
+        </form>
+    </div>
+
+    <!-- Map API -->
+    <script>
+        
+    </script>
+</body>
+</html>

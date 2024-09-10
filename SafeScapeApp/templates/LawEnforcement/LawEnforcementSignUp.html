@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}" type="image/x-icon">
+    <title>Law Enforcement Registration</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container-bg {
+            background-image: url('{% static "images/Lawenforcement.jpeg" %}');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.295);
+            background-color: #ffffff; /* Changed to solid white */
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        label {
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-bottom: 15px;
+        }
+
+        .form-check-input {
+            margin-top: 5px;
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .invalid-feedback {
+            color: red;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .login-link a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-bg">
+        <div class="container">
+            <h2>Sign Up</h2>
+            <form method="post" class="row g-3 needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="col-md-6">
+                    <label for="inputUsername">Username</label>
+                    <input type="text" class="form-control" id="inputUsername" name="username" required>
+                    <div class="invalid-feedback">
+                        Please provide a username.
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputName">Name</label>
+                    <input type="text" class="form-control" id="inputName" name="name" required>
+                    <div class="invalid-feedback">
+                        Please provide your name.
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputEmail">Email</label>
+                    <input type="email" class="form-control" id="inputEmail" name="email" required>
+                    <div class="invalid-feedback">
+                        Please provide a valid email address.
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" class="form-control" id="inputPassword" name="password" required>
+                    <div class="invalid-feedback">
+                        Please provide a password.
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputBadgeNumber">Badge Number</label>
+                    <input type="text" class="form-control" id="inputBadgeNumber" name="badge_number" required>
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Sign up</button>
+                </div>
+            </form>
+            <div class="login-link">
+                <p>Already have an account? <a href="">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Validation Script -->
+    {% comment %} <script>
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll('.needs-validation');
+
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+
+                    form.classList.add('was-validated');
+                }, false);
+            });
+    </script> {% endcomment %}
+</body>
+</html>
