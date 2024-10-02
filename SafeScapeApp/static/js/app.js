@@ -28,20 +28,25 @@ function handleCarouselScroll(container, direction) {
     $carouselContent.css('transform', `translateX(${translateX}px)`);
 }
 
-// Fetch trending crime news using NewsAPI
+
+
+
 async function fetchNews(category = '') {
     const apiKey = '87e9b9da28a04c1cba25f4e178c352b9'; // Replace with your actual API key
+    const proxyUrl = 'https://cors-anywhere.herokuapp.com/'; // Use this proxy URL for CORS issues (only for testing)
     const url = `https://newsapi.org/v2/everything?q=crime${category ? `&category=${category}` : ''}&language=en&sortBy=publishedAt&apiKey=${apiKey}`;
 
     showLoadingMessage('#news-container', 'Loading crime news, please wait...');
 
     try {
-        const response = await $.getJSON(url);
+        // Fetch news data with a proxy URL in case of CORS issues
+        const response = await $.getJSON(proxyUrl + url);
         if (!response.articles || response.articles.length === 0) {
             showError('#news-container', 'No news articles found.');
             return;
         }
 
+        // Map the articles into HTML
         const newsHTML = response.articles.slice(0, 5).map((article, index) => `
             <div class="carousel-item news-article animate__animated animate__fadeIn">
                 <a href="#news-detail" class="news-link" data-id="${index}">
@@ -52,6 +57,7 @@ async function fetchNews(category = '') {
             </div>
         `).join('');
 
+        // Display the news articles
         $('#news-container').html(newsHTML);
 
         // Add click event listeners to news links
@@ -61,10 +67,25 @@ async function fetchNews(category = '') {
             showNewsDetail(id);
         });
     } catch (error) {
-        console.error('Error fetching news:', error);
+        console.error('Error fetching news:', error.responseJSON || error);
         showError('#news-container', 'Failed to load news articles. Please try again later.');
     }
 }
+
+function showLoadingMessage(container, message) {
+    $(container).html(`<p class="loading">${message}</p>`);
+}
+
+function showError(container, message) {
+    $(container).html(`<p class="error">${message}</p>`);
+}
+
+function showNewsDetail(id) {
+    // Logic to display the detailed news article based on its ID
+    // This is a placeholder; you should implement how you want to show details.
+    console.log('Showing details for news article ID:', id);
+}
+
 
 // Fetch crime-related podcasts using the Spotify API
 async function fetchPodcasts(category = '') {

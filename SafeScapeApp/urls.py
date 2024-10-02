@@ -11,6 +11,9 @@ urlpatterns = [
     path('Register/',views.Register, name ="Register"),
     path('CivilianRegistration/',views.CivilianRegister, name = 'CivilianRegister'),
     path('CivilianLogin/',views.Civilianlogin, name = 'CivilianLogin'),
+    path('CivilianLogOut/',views.civilian_logout, name = 'CivilianLogOut'),
+    path('CivilianProfile/',views.CivilianProfile,name = 'CivilianProfile'),
+    path('CivilianDashboard/',views.CivilianDashboard,name = 'CivilianDashboard'),
     path('LawEnforcementLogin/',views.LawEnforcementLogin, name = 'LawEnforcementLogin'),
     path('LawEnforcementRegister/', views.LawEnforcementRegister, name = 'LawEnforcementRegister'),
 ]

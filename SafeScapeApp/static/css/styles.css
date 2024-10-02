@@ -118,7 +118,7 @@ header {
     padding: 5rem 2rem;
     color: #fff;
     background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
-                url("https://images.unsplash.com/photo-1718592168437-8382e5b97736?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGNyaW1lfGVufDB8fDB8fHww") no-repeat center center / cover;
+                url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTc76CHKqKFzHhcj2VXnk7N3DfvEoNz6Gp5Uw&s") no-repeat center center / cover;
     background-attachment: fixed;
     border-bottom: 5px solid #007bff;
     transition: background-image 1s ease-in-out; /* Smooth transition between images */

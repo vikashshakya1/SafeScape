@@ -1,7 +1,13 @@
-from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django import forms
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .models import CustomUser
 
-class User(AbstractUser):
-    Is_Admin = models.BooleanField('Is Admin',default=False)
-    Is_Civilian = models.BooleanField('Is Civilian',default=False)
-    Is_LawEnforcement = models.BooleanField('Is_LawEnforcement',default=False)
+class CivilianRegistrationForm(UserCreationForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'name', 'email', 'phonenumber', 'password1', 'password2']
+
+class CivilianLoginForm(AuthenticationForm):
+    username = forms.CharField(label="Username", max_length=100)
+    password = forms.CharField(label="Password", widget=forms.PasswordInput)

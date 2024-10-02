@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'SafeScapeApp',  # Your custom app
+    'SafeScapeApp',
 ]
 
 MIDDLEWARE = [
@@ -98,7 +98,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'SafeScapeApp', 'static'),  # Correct path
+]
 
-AUTH_USER_MODEL = 'account.User'
+
+AUTH_USER_MODEL = 'SafeScapeApp.CustomUser'
 
