@@ -18,7 +18,6 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('', include('SafeScapeApp.urls')),
-    # path('Authentication/',include('Authentication.urls')),
     path('admin/', admin.site.urls),
+    path('', include('SafeScapeApp.urls')),
 ]

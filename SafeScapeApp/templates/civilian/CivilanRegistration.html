@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,10 +15,10 @@
             background-color: #f2f2f2;
             margin: 0;
             padding: 0;
-            height: 100vh; /* Full viewport height */
-            display: flex; /* Flexbox for centering */
-            align-items: center; /* Center vertically */
-            justify-content: center; /* Center horizontally */
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .container-bg {
@@ -32,10 +33,10 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 600px; /* Increased maximum width */
             padding: 20px;
             border-radius: 8px;
-            background-color: #fff; /* White background */
+            background-color: #fff;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
@@ -45,26 +46,21 @@
             color: #007bff;
         }
 
-        label {
-            font-weight: bold;
-            color: #007bff;
+        .form-group {
+            margin-bottom: 15px;
         }
 
-        input[type="text"],
-        input[type="email"],
-        input[type="password"],
-        input[type="tel"],
-        select {
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
-            margin-bottom: 15px;
-        }
-
-        .form-check-input {
-            margin-top: 5px;
         }
 
         .btn-primary {
@@ -82,10 +78,6 @@
             background-color: #0056b3;
         }
 
-        .invalid-feedback {
-            color: red;
-        }
-
         .login-link {
             text-align: center;
             margin-top: 20px;
@@ -99,80 +91,106 @@
         .login-link a:hover {
             text-decoration: underline;
         }
-
-        a {
-            text-decoration: none;
-        }
     </style>
 </head>
+
 <body>
     <div class="container-bg">
         <div class="container">
             <h2>Sign Up</h2>
-            <form method="post" action="" class="row g-3 needs-validation" novalidate>
+            <form method="post" class="needs-validation" novalidate>
                 {% csrf_token %}
-                <div class="col-md-6">
+                
+                <div class="form-group">
                     <label for="inputUsername">Username</label>
                     <input type="text" class="form-control" id="inputUsername" name="username" required>
                     <div class="invalid-feedback">
                         Please provide a username.
                     </div>
                 </div>
-                <div class="col-md-6">
+
+                <div class="form-group">
                     <label for="inputName">Name</label>
                     <input type="text" class="form-control" id="inputName" name="name" required>
                     <div class="invalid-feedback">
                         Please provide your name.
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="inputEmail">Email</label>
+
+                <div class="form-group">
+                    <label for="inputEmail">Email address</label>
                     <input type="email" class="form-control" id="inputEmail" name="email" required>
                     <div class="invalid-feedback">
                         Please provide a valid email address.
                     </div>
                 </div>
-                <div class="col-md-6">
+
+                <div class="form-group">
                     <label for="inputPhone">Phone Number</label>
                     <input type="tel" class="form-control" id="inputPhone" name="phone" required>
                     <div class="invalid-feedback">
                         Please provide a valid phone number.
                     </div>
                 </div>
-                <div class="col-md-12">
+
+                <div class="form-group">
                     <label for="inputPassword">Password</label>
                     <input type="password" class="form-control" id="inputPassword" name="password" required>
                     <div class="invalid-feedback">
                         Please provide a password.
                     </div>
                 </div>
-                {% comment %} {% csrf_token %}
-                {{ form.as_p }} {% endcomment %}
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Sign up</button>
-                </div>
+
+                <button type="submit" class="btn btn-primary">Sign up</button>
             </form>
+
             <div class="login-link">
-                <p>Already have an account? <a href={% url 'CivilianLogin' %}>Login</a></p>
+                <p>Already have an account? <a href="{% url 'CivilianLogin' %}">Login</a></p>
             </div>
         </div>
     </div>
-    
-    <!-- Form Validation Script -->
-    {% comment %} <script>
-        var forms = document.querySelectorAll('.needs-validation');
 
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        (function () {
+            'use strict';
+            // Load previously saved values from local storage
+            document.addEventListener("DOMContentLoaded", function () {
+                if (localStorage.getItem('username')) {
+                    document.getElementById('inputUsername').value = localStorage.getItem('username');
+                }
+                if (localStorage.getItem('name')) {
+                    document.getElementById('inputName').value = localStorage.getItem('name');
+                }
+                if (localStorage.getItem('email')) {
+                    document.getElementById('inputEmail').value = localStorage.getItem('email');
+                }
+                if (localStorage.getItem('phone')) {
+                    document.getElementById('inputPhone').value = localStorage.getItem('phone');
+                }
+            });
+
+            var forms = document.getElementsByClassName('needs-validation');
+            Array.prototype.filter.call(forms, function (form) {
                 form.addEventListener('submit', function (event) {
-                    if (!form.checkValidity()) {
+                    // Save the form values in local storage
+                    localStorage.setItem('username', document.getElementById('inputUsername').value);
+                    localStorage.setItem('name', document.getElementById('inputName').value);
+                    localStorage.setItem('email', document.getElementById('inputEmail').value);
+                    localStorage.setItem('phone', document.getElementById('inputPhone').value);
+                    
+                    // Validation check
+                    if (form.checkValidity() === false) {
                         event.preventDefault();
                         event.stopPropagation();
                     }
-
                     form.classList.add('was-validated');
                 }, false);
             });
-    </script> {% endcomment %}
+        })();
+    </script>
 </body>
+
 </html>

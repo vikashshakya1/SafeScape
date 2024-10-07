@@ -6,7 +6,7 @@ from .models import CustomUser
 class CivilianRegistrationForm(UserCreationForm):
     class Meta:
         model = CustomUser
-        fields = ['username', 'name', 'email', 'phonenumber', 'password1', 'password2']
+        fields = ['username', 'name', 'email', 'phonenumber', 'password1']
 
 class CivilianLoginForm(AuthenticationForm):
     username = forms.CharField(label="Username", max_length=100)

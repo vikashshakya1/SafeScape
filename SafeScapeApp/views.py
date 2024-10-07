@@ -2,6 +2,8 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .forms import CivilianRegistrationForm, CivilianLoginForm
+from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
+
 
 def index(request):
     return render(request, 'index.html')
@@ -46,14 +48,22 @@ def LawEnforcementRegister(request):
 
 def CivilianRegister(request):
     if request.method == 'POST':
-        form = CivilianRegistrationForm(request.POST)
+        form = CivilianRegistrationForm(data=request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)
-            return redirect('CivilianLogin')
+            login(request, user)  # Log in the new user
+            return redirect('CivilianLogin')  # Redirect to the login page
+        else:
+            # Debug: Add this line to print form errors if validation fails
+            print(form.errors)
     else:
-        form = CivilianRegistrationForm()
-    return render(request, 'civilian\CivilanRegistration.html', {'form': form})
+        # Make sure you're using the correct form (CivilianRegistrationForm instead of UserCreationForm)
+        initial_data = {'username': '', 'phonenumber': '', 'password2': ""}
+        form = CivilianRegistrationForm(initial=initial_data)
+    
+    return render(request, 'civilian/CivilanRegistration.html', {'form': form})
+
+
 
 def Civilianlogin(request):
     if request.method == 'POST':
@@ -62,12 +72,13 @@ def Civilianlogin(request):
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
-                return redirect('CivilianProfile')
+                print("Success")
+                return redirect('civilian\CivilianProfile.html')
             else:
                 messages.error(request, 'Invalid username or password')
     else:
         form = CivilianLoginForm()
-    return render(request, 'Authentication/civilian_login.html', {'form': form})
+    return render(request, 'civilian\CivilanLogin.html', {'form': form})
 
 def civilian_logout(request):
     logout(request)
