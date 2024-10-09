@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup - Civilian</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Signup Card Styles */
+        .signup-card {
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .signup-card h2 {
+            margin-bottom: 30px;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .signup-btn {
+            width: 100%;
+            padding: 12px 0;
+            border: none;
+            border-radius: 25px;
+            background-color: #27ae60;
+            color: #ffffff;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .signup-btn:hover {
+            background-color: #1e8449;
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 15px;
+            text-align: center;
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 576px) {
+            .signup-card {
+                padding: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="signup-card">
+        <h2>Civilian Signup</h2>
+        <form id="civilianSignupForm">
+            <div class="form-group">
+                <label for="civilian-name" class="form-label">Full Name</label>
+                <input type="text" id="civilian-name" class="form-control" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label for="civilian-email" class="form-label">Email</label>
+                <input type="email" id="civilian-email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="civilian-phone" class="form-label">Phone Number</label>
+                <input type="tel" id="civilian-phone" class="form-control" placeholder="Enter your phone number" required>
+            </div>
+            <div class="form-group">
+                <label for="civilian-password" class="form-label">Password</label>
+                <input type="password" id="civilian-password" class="form-control" placeholder="Enter a strong password" required>
+            </div>
+            <div class="form-group">
+                <label for="civilian-address" class="form-label">Address</label>
+                <input type="text" id="civilian-address" class="form-control" placeholder="Enter your address" required>
+            </div>
+            <button type="submit" class="btn signup-btn">Sign Up</button>
+            <a href="register.html" class="back-link">&larr; Back to Register</a>
+        </form>
+    </div>
+
+    <!-- Bootstrap 5 JS and Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        // Handle Civilian Signup Form Submission
+        document.getElementById('civilianSignupForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Here you would typically send the data to the server
+            alert('Civilian account created successfully!');
+            // Optionally, redirect to login page
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+
+</html>

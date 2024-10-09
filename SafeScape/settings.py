@@ -39,7 +39,7 @@ ROOT_URLCONF = 'SafeScapeApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'SafeScapeApp', 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'SafeScapeApp', 'templates')],  # Ensure this path is correct
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -51,7 +51,6 @@ TEMPLATES = [
         },
     },
 ]
-
 
 WSGI_APPLICATION = 'SafeScape.wsgi.application'
 
@@ -85,19 +84,15 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
 
-# STATIC_URL = '/static/'
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'SafeScapeApp', 'static'),  # Correct path for static files
+]
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'SafeScapeApp', 'static'),  # Correct path
-]
-
-
+# Custom user model
 AUTH_USER_MODEL = 'SafeScapeApp.CustomUser'
 

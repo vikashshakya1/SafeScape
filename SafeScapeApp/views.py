@@ -1,10 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .forms import CivilianRegistrationForm, CivilianLoginForm
-from django.contrib.auth.forms import UserCreationForm,AuthenticationForm
 
-
+# Home and informational pages
 def index(request):
     return render(request, 'index.html')
 
@@ -16,71 +15,119 @@ def contact_us(request):
 
 def crime_forecasting(request):
     return render(request, 'crime-forecasting.html')
-    
 
 def services(request):
     return render(request, 'services.html')
 
-def Login(request):
-    return render(request, 'Authentication/Login.html')
-
-def Register(request):
-    return render(request, 'Authentication/Register.html')
-
-# def CivilianRegister(request):
-#     return render(request, 'civilian/CivilanRegistration.html')
-
-# def Civilianlogin(request):
-#     return render(request, 'civilian/CivilanLogin.html')
-
+# Civilian-specific views
 def CivilianProfile(request):
-    return render(request, 'civilian\CivilianProfile.html')
+    return render(request, 'civilian/CivilianProfile.html')
 
 def CivilianDashboard(request):
-    return render(render,'civilian\CiviilanDashboard.html')
-
-def LawEnforcementLogin(request):
-    return render(request,'LawEnforcement/LawEnforcementLogin.html')
-
-def LawEnforcementRegister(request):
-    return render(request,'LawEnforcement/LawEnforcementSignUp.html')
+    return render(request, 'civilian/CivilianDashboard.html')
 
 
 def CivilianRegister(request):
     if request.method == 'POST':
-        form = CivilianRegistrationForm(data=request.POST)
+        form = CivilianRegistrationForm(request,request.POST)
         if form.is_valid():
-            user = form.save()
-            login(request, user)  # Log in the new user
-            return redirect('CivilianLogin')  # Redirect to the login page
+            form.save()  # Save the civilian user
+            messages.success(request, 'Registration successful. Please log in with your credentials.')
+            return redirect('CivilianLogin')  # Fixed redirect to correct name
         else:
-            # Debug: Add this line to print form errors if validation fails
-            print(form.errors)
+            # Show error messages on the registration page
+            messages.error(request, 'Please correct the errors below.')
+            print(form.errors)  # Display errors for debugging
     else:
-        # Make sure you're using the correct form (CivilianRegistrationForm instead of UserCreationForm)
-        initial_data = {'username': '', 'phonenumber': '', 'password2': ""}
-        form = CivilianRegistrationForm(initial=initial_data)
-    
-    return render(request, 'civilian/CivilanRegistration.html', {'form': form})
+        form = CivilianRegistrationForm()
 
+    return render(request, 'civilian/CivilianRegister.html', {'form': form})  # Fixed template name
 
+# def CivilianLogin(request):
+#     if request.method == 'POST':
+#         form = CivilianLoginForm(request.POST)
+#         if form.is_valid():
+#             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
+#             if user is not None:
+#                 login(request, user)  # Log in the user
+#                 return redirect('CivilianDashboard')  # Redirect to dashboard after login
+#             else:
+#                 messages.error(request, 'Invalid username or password')  # Display login error
+#     else:
+#         form = CivilianLoginForm()
 
-def Civilianlogin(request):
+#     return render(request, 'civilian/CivilianLogin.html', {'form': form})  # Fixed template name
+
+def CivilianLogin(request):
     if request.method == 'POST':
-        form = CivilianLoginForm(data=request.POST)
+        print("POST request received")
+        form = CivilianLoginForm(request,request.POST)
+        if form.is_valid():
+            print("Form is valid")
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(username=username, password=password)
+            print("User authentication:", user)
+            if user is not None:
+                login(request, user)
+                return redirect('CivilianDashboard')
+            else:
+                messages.error(request, 'Invalid username or password')
+        else:
+            messages.error(request, 'Please correct the errors below.')
+    else:
+        form = CivilianLoginForm()
+
+    return render(request, 'civilian/CivilianLogin.html', {'form': form})
+
+
+
+
+
+def civilian_logout(request):
+    logout(request)
+    messages.success(request, 'You have been logged out successfully.')  # Logout success message
+    return redirect('CivilianLogin')  # Fixed redirect to correct name
+
+# Law Enforcement-specific views
+def LawEnforcementProfile(request):
+    return render(request, 'LawEnforcement/LawEnforcementProfile.html')
+
+def LawEnforcementDashboard(request):
+    return render(request, 'LawEnforcement/LawEnforcementDashboard.html')
+
+def LawEnforcementLogin(request):
+    if request.method == 'POST':
+        form = CivilianLoginForm(data=request.POST)  # You may want to replace this with a specific form for law enforcement
         if form.is_valid():
             user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password'])
             if user is not None:
                 login(request, user)
-                print("Success")
-                return redirect('civilian\CivilianProfile.html')
+                return redirect('LawEnforcementDashboard')
             else:
                 messages.error(request, 'Invalid username or password')
     else:
-        form = CivilianLoginForm()
-    return render(request, 'civilian\CivilanLogin.html', {'form': form})
+        form = CivilianLoginForm()  # Replace with LawEnforcementLoginForm if needed
+    
+    return render(request, 'LawEnforcement/LawEnforcementLogin.html', {'form': form})
 
-def civilian_logout(request):
-    logout(request)
-    return redirect('civilian\CivilanLogin.html')
+def LawEnforcementRegister(request):
+    if request.method == 'POST':
+        # Implement law enforcement registration form
+        pass
+    else:
+        pass
+    return render(request, 'LawEnforcement/LawEnforcementSignUp.html')
 
+def LawEnforcementCrimeView(request):
+    return render(request, 'LawEnforcement/LawEnforcementCrimeView.html')
+
+# Crime Reporting views
+def ReportCrime(request):
+    return render(request, 'ReportCrime/ReportCrime.html')
+
+def ReportCriminal(request):
+    return render(request, 'ReportCrime/ReportCriminal.html')
+
+def register(request):
+    return render(request,'Authentication/register.html')

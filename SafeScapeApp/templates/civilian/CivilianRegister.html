@@ -33,7 +33,7 @@
         }
 
         .container {
-            max-width: 600px; /* Increased maximum width */
+            max-width: 600px;
             padding: 20px;
             border-radius: 8px;
             background-color: #fff;
@@ -91,6 +91,30 @@
         .login-link a:hover {
             text-decoration: underline;
         }
+
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .clear-storage {
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .clear-storage button {
+            background-color: transparent;
+            color: #007bff;
+            border: none;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .clear-storage button:hover {
+            color: #0056b3;
+        }
+
     </style>
 </head>
 
@@ -98,54 +122,75 @@
     <div class="container-bg">
         <div class="container">
             <h2>Sign Up</h2>
-            <form method="post" class="needs-validation" novalidate>
+            {% comment %} <form method="POST" action="{% url 'CivilianRegister' %}" class="needs-validation" novalidate>
                 {% csrf_token %}
-                
+
+                {% if form.non_field_errors %}
+                    <div class="error-message">{{ form.non_field_errors }}</div>
+                {% endif %}
+
+                <!-- Username field -->
                 <div class="form-group">
                     <label for="inputUsername">Username</label>
-                    <input type="text" class="form-control" id="inputUsername" name="username" required>
-                    <div class="invalid-feedback">
-                        Please provide a username.
-                    </div>
+                    <input type="text" class="form-control" id="inputUsername" name="username" value="{{ form.username.value }}" required>
+                    <div class="invalid-feedback">Please provide a username.</div>
+                    {% if form.username.errors %}
+                        <div class="error-message">{{ form.username.errors }}</div>
+                    {% endif %}
                 </div>
 
+                <!-- Additional fields like Name, Email, Phone, and Password -->
                 <div class="form-group">
                     <label for="inputName">Name</label>
-                    <input type="text" class="form-control" id="inputName" name="name" required>
-                    <div class="invalid-feedback">
-                        Please provide your name.
-                    </div>
+                    <input type="text" class="form-control" id="inputName" name="name" value="{{ form.name.value }}" required placeholder="Enter your name">
+                    <div class="invalid-feedback">Please provide your name.</div>
+                    {% if form.name.errors %}
+                        <div class="error-message">{{ form.name.errors }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
                     <label for="inputEmail">Email address</label>
-                    <input type="email" class="form-control" id="inputEmail" name="email" required>
-                    <div class="invalid-feedback">
-                        Please provide a valid email address.
-                    </div>
+                    <input type="email" class="form-control" id="inputEmail" name="email" value="{{ form.email.value }}" required placeholder="Enter your email">
+                    <div class="invalid-feedback">Please provide a valid email address.</div>
+                    {% if form.email.errors %}
+                        <div class="error-message">{{ form.email.errors }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
                     <label for="inputPhone">Phone Number</label>
-                    <input type="tel" class="form-control" id="inputPhone" name="phone" required>
-                    <div class="invalid-feedback">
-                        Please provide a valid phone number.
-                    </div>
+                    <input type="tel" class="form-control" id="inputPhone" name="phonenumber" value="{{ form.phonenumber.value }}" required placeholder="Enter your phone number" pattern="[0-9]{10}">
+                    <div class="invalid-feedback">Please provide a valid 10-digit phone number.</div>
+                    {% if form.phonenumber.errors %}
+                        <div class="error-message">{{ form.phonenumber.errors }}</div>
+                    {% endif %}
                 </div>
 
                 <div class="form-group">
                     <label for="inputPassword">Password</label>
-                    <input type="password" class="form-control" id="inputPassword" name="password" required>
-                    <div class="invalid-feedback">
-                        Please provide a password.
-                    </div>
+                    <input type="password" class="form-control" id="inputPassword" name="password" required placeholder="Enter a strong password" autocomplete="off">
+                    <div class="invalid-feedback">Please provide a password.</div>
+                    {% if form.password.errors %}
+                        <div class="error-message">{{ form.password.errors }}</div>
+                    {% endif %}
                 </div>
 
                 <button type="submit" class="btn btn-primary">Sign up</button>
+            </form> {% endcomment %}
+
+            <form method="POST" action="{% url 'CivilianRegister' %}">
+                {% csrf_token %}
+                {{ form.as_p }}  <!-- This renders the form fields automatically -->
+                <button type="submit" class="btn btn-primary">Sign Up</button>
             </form>
 
             <div class="login-link">
                 <p>Already have an account? <a href="{% url 'CivilianLogin' %}">Login</a></p>
+            </div>
+
+            <div class="clear-storage">
+                <button onclick="clearStorage()">Clear Saved Data</button>
             </div>
         </div>
     </div>
@@ -180,7 +225,7 @@
                     localStorage.setItem('name', document.getElementById('inputName').value);
                     localStorage.setItem('email', document.getElementById('inputEmail').value);
                     localStorage.setItem('phone', document.getElementById('inputPhone').value);
-                    
+
                     // Validation check
                     if (form.checkValidity() === false) {
                         event.preventDefault();
@@ -190,6 +235,12 @@
                 }, false);
             });
         })();
+
+        // Function to clear the stored data in localStorage
+        function clearStorage() {
+            localStorage.clear();
+            alert("Stored data has been cleared.");
+        }
     </script>
 </body>
 

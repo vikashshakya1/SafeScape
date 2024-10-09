@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crime Reporting Dashboard</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f6f9;
+            transition: background-color 0.3s;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            position: fixed;
+            height: 100%;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding-top: 30px;
+            transition: width 0.3s;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            color: #ecf0f1;
+            padding: 12px 20px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #34495e;
+            color: #ffffff;
+        }
+
+        .sidebar a i {
+            margin-right: 15px;
+            font-size: 18px;
+            width: 25px;
+            text-align: center;
+        }
+
+        /* Toggle Button for Sidebar */
+        .sidebar-toggle {
+            position: absolute;
+            top: 15px;
+            right: -15px;
+            background-color: #2c3e50;
+            border: 3px solid #ecf0f1;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .sidebar.collapsed {
+            width: 80px;
+        }
+
+        .sidebar.collapsed h2,
+        .sidebar.collapsed .form-management h4 {
+            display: none;
+        }
+
+        .sidebar.collapsed a span {
+            display: none;
+        }
+
+        .sidebar.collapsed a i {
+            margin-right: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            margin-left: 250px;
+            padding: 30px;
+            transition: margin-left 0.3s;
+        }
+
+        .sidebar.collapsed + .main-content {
+            margin-left: 80px;
+        }
+
+        .dashboard-header,
+        .officer-header,
+        .user-header,
+        .resident-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h1,
+        .officer-header h2,
+        .user-header h2,
+        .resident-header h2 {
+            font-size: 28px;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        .user-profile img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
+            border: 2px solid #2c3e50;
+        }
+
+        .user-profile p {
+            margin: 0;
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        /* Cards */
+        .card-container,
+        .officer-cards,
+        .resident-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card,
+        .officer-card,
+        .resident-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover,
+        .officer-card:hover,
+        .resident-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .card .settings-icon,
+        .officer-card .settings-icon,
+        .resident-card .settings-icon {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .card .settings-icon:hover,
+        .officer-card .settings-icon:hover,
+        .resident-card .settings-icon:hover {
+            color: #2c3e50;
+        }
+
+        .card h3,
+        .officer-card h5,
+        .resident-card h5 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .card p,
+        .officer-card p,
+        .resident-card p {
+            font-size: 14px;
+            color: #7f8c8d;
+            margin: 0;
+        }
+
+        /* Chart Container */
+        .chart-container {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .chart-container h3 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        /* Search Bar Styles */
+        .search-bar {
+            width: 300px;
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 8px 35px 8px 15px;
+            border-radius: 20px;
+            border: 1px solid #ced4da;
+        }
+
+        .search-bar .fa-search {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+        }
+
+        /* User Information Styles */
+        .user-profile-info,
+        .resident-profile-info {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 40px;
+        }
+
+        .user-profile-info h4,
+        .resident-profile-info h4 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .user-profile-info .form-group,
+        .resident-profile-info .form-group {
+            margin-bottom: 15px;
+        }
+
+        .user-profile-info label,
+        .resident-profile-info label {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+
+        .user-profile-info input,
+        .user-profile-info textarea,
+        .resident-profile-info input,
+        .resident-profile-info textarea {
+            border-radius: 8px;
+            border: 1px solid #ced4da;
+        }
+
+        .user-profile-info button,
+        .resident-profile-info button {
+            border-radius: 20px;
+        }
+
+        /* Resident Information Styles */
+        .resident-profile-info table {
+            width: 100%;
+        }
+
+        .resident-profile-info th,
+        .resident-profile-info td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .resident-profile-info th {
+            background-color: #2c3e50;
+            color: #ffffff;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .dashboard-header,
+            .officer-header,
+            .user-header,
+            .resident-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .user-profile,
+            .officer-cards,
+            .resident-cards {
+                justify-content: center;
+            }
+
+            .search-bar {
+                width: 100%;
+                margin-top: 15px;
+            }
+
+            .user-profile-info,
+            .resident-profile-info {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h2>Crime Reporting</h2>
+        <div class="sidebar-toggle" id="sidebarToggle">
+            <i class="fas fa-chevron-left"></i>
+        </div>
+        <a href="#" data-section="dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a>
+        <div class="form-management mt-4">
+            <h4 class="px-3">Form Management</h4>
+            <a href="#" data-section="crime-info"><i class="fas fa-folder"></i><span>Crime Information</span></a>
+            <a href="#" data-section="police-info"><i class="fas fa-user-shield"></i><span>Police Officer Information</span></a>
+            <a href="#" data-section="response-info"><i class="fas fa-clipboard-list"></i><span>Response Information</span></a>
+            <a href="#" data-section="resident-info"><i class="fas fa-users"></i><span>Resident Information</span></a>
+            <a href="#" data-section="user-info"><i class="fas fa-user"></i><span>User</span></a>
+        </div>
+        <a href="#" data-section="resident-credential"><i class="fas fa-file-alt"></i><span>Resident Credential</span></a>
+        <a href="#" data-section="database"><i class="fas fa-database"></i><span>Database Backup/Restore</span></a>
+        <a href="#" data-section="crime-category"><i class="fas fa-folder-open"></i><span>Crime Category Encoding</span></a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="main-content">
+        <!-- Dashboard Section -->
+        <div id="dashboard" style="display:none;">
+            <div class="dashboard-header">
+                <h1>Dashboard</h1>
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/50" alt="User Profile">
+                    <p>John Doe</p>
+                </div>
+            </div>
+
+            <div class="card-container">
+                <div class="card">
+                    <div class="settings-icon"><i class="fas fa-cog"></i></div>
+                    <h3>10,468</h3>
+                    <p>Total Crimes Reported</p>
+                </div>
+                <div class="card">
+                    <div class="settings-icon"><i class="fas fa-cog"></i></div>
+                    <h3>5,230</h3>
+                    <p>Total Police Officers</p>
+                </div>
+                <div class="card">
+                    <div class="settings-icon"><i class="fas fa-cog"></i></div>
+                    <h3>1,112</h3>
+                    <p>Total Crimes Solved</p>
+                </div>
+                <div class="card">
+                    <div class="settings-icon"><i class="fas fa-cog"></i></div>
+                    <h3>3,456</h3>
+                    <p>Total Crimes Ongoing</p>
+                </div>
+            </div>
+
+            <div class="chart-container">
+                <h3>Crimes Reported Over the Year</h3>
+                <canvas id="crimeChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Crime Information Section -->
+        <div id="crime-info" style="display:none;">
+            <h2>Crime Information</h2>
+
+            <!-- List of Previously Reported Crimes -->
+            <div id="reported-crimes" class="mt-4">
+                <h4>Previously Reported Crimes</h4>
+                <ul class="list-group" id="crime-list">
+                    <li class="list-group-item">Crime 1: Burglary reported on 01/01/2024</li>
+                    <li class="list-group-item">Crime 2: Vandalism reported on 02/14/2024</li>
+                    <!-- More crimes can be listed here -->
+                </ul>
+            </div>
+
+            <!-- Form to Report a New Crime -->
+            <div id="new-crime-form" class="mt-4">
+                <h4>Report a New Crime</h4>
+                <form id="crimeForm">
+                    <div class="mb-3">
+                        <label for="crime-type" class="form-label">Type of Crime:</label>
+                        <input type="text" id="crime-type" class="form-control" placeholder="Enter type of crime" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="crime-location" class="form-label">Location:</label>
+                        <input type="text" id="crime-location" class="form-control" placeholder="Enter location" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="crime-date" class="form-label">Date:</label>
+                        <input type="date" id="crime-date" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="crime-description" class="form-label">Description:</label>
+                        <textarea id="crime-description" class="form-control" rows="4" placeholder="Enter description" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Report</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Police Officer Information Section -->
+        <div id="police-info" style="display:none;">
+            <div class="officer-header">
+                <h2>Police Officer Information</h2>
+                <div class="search-bar">
+                    <input type="text" id="officerSearch" class="form-control" placeholder="Search by name or rank...">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+
+            <div class="officer-cards" id="officerCards">
+                <!-- Officer Card 1 -->
+                <div class="officer-card">
+                    <img src="https://via.placeholder.com/300x200" alt="Officer Jane Smith">
+                    <h5>Officer Jane Smith</h5>
+                    <p><strong>Rank:</strong> Sergeant</p>
+                    <p><strong>Badge Number:</strong> 4521</p>
+                    <p><strong>Contact:</strong> (555) 123-4567</p>
+                    <p><strong>Email:</strong> jane.smith@police.gov</p>
+                    <p><strong>Unit:</strong> Homicide Division</p>
+                </div>
+
+                <!-- Officer Card 2 -->
+                <div class="officer-card">
+                    <img src="https://via.placeholder.com/300x200" alt="Officer Mark Johnson">
+                    <h5>Officer Mark Johnson</h5>
+                    <p><strong>Rank:</strong> Lieutenant</p>
+                    <p><strong>Badge Number:</strong> 3894</p>
+                    <p><strong>Contact:</strong> (555) 987-6543</p>
+                    <p><strong>Email:</strong> mark.johnson@police.gov</p>
+                    <p><strong>Unit:</strong> Cyber Crimes Unit</p>
+                </div>
+
+                <!-- Officer Card 3 -->
+                <div class="officer-card">
+                    <img src="https://via.placeholder.com/300x200" alt="Officer Emily Davis">
+                    <h5>Officer Emily Davis</h5>
+                    <p><strong>Rank:</strong> Detective</p>
+                    <p><strong>Badge Number:</strong> 2743</p>
+                    <p><strong>Contact:</strong> (555) 456-7890</p>
+                    <p><strong>Email:</strong> emily.davis@police.gov</p>
+                    <p><strong>Unit:</strong> Narcotics Division</p>
+                </div>
+
+                <!-- Add more officer cards as needed -->
+            </div>
+        </div>
+
+        <!-- User Information Section -->
+        <div id="user-info" style="display:none;">
+            <div class="user-header">
+                <h2>User Information</h2>
+            </div>
+
+            <div class="user-profile-info">
+                <h4>View and Edit Your Profile</h4>
+                <form id="userForm">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="user-name" class="form-label">Full Name:</label>
+                            <input type="text" id="user-name" class="form-control" value="John Doe" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="user-email" class="form-label">Email:</label>
+                            <input type="email" id="user-email" class="form-control" value="john.doe@example.com" required>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="user-phone" class="form-label">Phone Number:</label>
+                            <input type="tel" id="user-phone" class="form-control" value="(555) 123-4567" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="user-address" class="form-label">Address:</label>
+                            <input type="text" id="user-address" class="form-control" value="123 Main St, Anytown, USA" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="user-password" class="form-label">Password:</label>
+                        <input type="password" id="user-password" class="form-control" placeholder="Enter new password">
+                        <small class="text-muted">Leave blank if you do not want to change your password.</small>
+                    </div>
+                    <div class="mb-3">
+                        <label for="user-notes" class="form-label">Additional Notes:</label>
+                        <textarea id="user-notes" class="form-control" rows="4" placeholder="Enter any additional information required by the police."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Resident Information Section -->
+        <div id="resident-info" style="display:none;">
+            <div class="resident-header">
+                <h2>Resident Information</h2>
+                <div class="search-bar">
+                    <input type="text" id="residentSearch" class="form-control" placeholder="Search by name or demographic...">
+                    <i class="fas fa-search"></i>
+                </div>
+            </div>
+
+            <div class="resident-cards" id="residentCards">
+                <!-- Resident Card 1 -->
+                <div class="resident-card">
+                    <h5>Jane Doe</h5>
+                    <p><strong>Age:</strong> 34</p>
+                    <p><strong>Gender:</strong> Female</p>
+                    <p><strong>Address:</strong> 456 Elm St, Anytown, USA</p>
+                    <p><strong>Contact:</strong> (555) 234-5678</p>
+                    <p><strong>Email:</strong> jane.doe@example.com</p>
+                    <p><strong>Occupation:</strong> Teacher</p>
+                </div>
+
+                <!-- Resident Card 2 -->
+                <div class="resident-card">
+                    <h5>John Smith</h5>
+                    <p><strong>Age:</strong> 28</p>
+                    <p><strong>Gender:</strong> Male</p>
+                    <p><strong>Address:</strong> 789 Oak St, Anytown, USA</p>
+                    <p><strong>Contact:</strong> (555) 345-6789</p>
+                    <p><strong>Email:</strong> john.smith@example.com</p>
+                    <p><strong>Occupation:</strong> Engineer</p>
+                </div>
+
+                <!-- Resident Card 3 -->
+                <div class="resident-card">
+                    <h5>Emily Johnson</h5>
+                    <p><strong>Age:</strong> 45</p>
+                    <p><strong>Gender:</strong> Female</p>
+                    <p><strong>Address:</strong> 321 Pine St, Anytown, USA</p>
+                    <p><strong>Contact:</strong> (555) 456-7890</p>
+                    <p><strong>Email:</strong> emily.johnson@example.com</p>
+                    <p><strong>Occupation:</strong> Nurse</p>
+                </div>
+
+                <!-- Add more resident cards as needed -->
+            </div>
+        </div>
+
+        <!-- Resident Credential Section -->
+        <div id="resident-credential" style="display:none;">
+            <h2>Resident Credential</h2>
+            <p>Details about resident credentials and access levels.</p>
+        </div>
+
+        <!-- Database Backup/Restore Section -->
+        <div id="database" style="display:none;">
+            <h2>Database Backup/Restore</h2>
+            <p>Backup and restore operations for the database.</p>
+        </div>
+
+        <!-- Crime Category Encoding Section -->
+        <div id="crime-category" style="display:none;">
+            <h2>Crime Category Encoding</h2>
+            <p>Categories of crimes and their encodings.</p>
+        </div>
+    </div>
+
+
+    <!-- Bootstrap 5 JS and Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        // Handle Sidebar Toggle
+        const sidebar = document.getElementById('sidebar');
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            const icon = sidebarToggle.querySelector('i');
+            icon.classList.toggle('fa-chevron-left');
+            icon.classList.toggle('fa-chevron-right');
+        });
+
+        // Handle Dynamic Content Loading
+        document.querySelectorAll('.sidebar a').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('data-section');
+
+                // Hide all sections
+                document.querySelectorAll('.main-content > div').forEach(section => {
+                    section.style.display = 'none';
+                });
+
+                // Show the selected section
+                document.getElementById(sectionId).style.display = 'block';
+            });
+        });
+
+        // Initially show the dashboard
+        document.getElementById('dashboard').style.display = 'block';
+
+        // Form submission logic for Crime Report
+        document.getElementById('crimeForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Handle form submission logic here
+            alert('Crime reported successfully!');
+            // Optionally, reset the form
+            this.reset();
+        });
+
+        // Form submission logic for User Profile
+        document.getElementById('userForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            // Here you would typically send the updated user data to the server
+            alert('Profile updated successfully!');
+            // Optionally, reset the password field
+            document.getElementById('user-password').value = '';
+        });
+
+        // Initialize Chart.js
+        const ctx = document.getElementById('crimeChart').getContext('2d');
+        const crimeChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Number of Crimes',
+                    data: [200, 300, 150, 500, 700, 200, 900, 400, 600, 800, 500, 1000],
+                    backgroundColor: '#3498db',
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        backgroundColor: '#2c3e50',
+                        titleColor: '#ecf0f1',
+                        bodyColor: '#ecf0f1',
+                        borderColor: '#ecf0f1',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            color: '#2c3e50',
+                            stepSize: 200
+                        },
+                        grid: {
+                            color: '#bdc3c7'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#2c3e50'
+                        },
+                        grid: {
+                            color: '#bdc3c7'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Search Functionality for Police Officers
+        const officerSearch = document.getElementById('officerSearch');
+        const officerCards = document.getElementById('officerCards').children;
+
+        officerSearch.addEventListener('keyup', function () {
+            const filter = this.value.toLowerCase();
+            Array.from(officerCards).forEach(card => {
+                const name = card.querySelector('h5').textContent.toLowerCase();
+                const rank = card.querySelectorAll('p strong')[0].nextSibling.textContent.toLowerCase();
+                const unit = card.querySelectorAll('p strong')[4].nextSibling.textContent.toLowerCase();
+                if (name.includes(filter) || rank.includes(filter) || unit.includes(filter)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+
+        // Search Functionality for Residents
+        const residentSearch = document.getElementById('residentSearch');
+        const residentCards = document.getElementById('residentCards').children;
+
+        residentSearch.addEventListener('keyup', function () {
+            const filter = this.value.toLowerCase();
+            Array.from(residentCards).forEach(card => {
+                const name = card.querySelector('h5').textContent.toLowerCase();
+                const age = card.querySelectorAll('p strong')[0].nextSibling.textContent.toLowerCase();
+                const gender = card.querySelectorAll('p strong')[1].nextSibling.textContent.toLowerCase();
+                const occupation = card.querySelectorAll('p strong')[5].nextSibling.textContent.toLowerCase();
+                if (name.includes(filter) || age.includes(filter) || gender.includes(filter) || occupation.includes(filter)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

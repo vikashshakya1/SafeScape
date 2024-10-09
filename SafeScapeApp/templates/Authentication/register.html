@@ -23,10 +23,11 @@
         }
 
         .container {
-            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background */
+            background-color: rgba(255, 255, 255, 0.9);
             border-radius: 15px;
             padding: 40px;
             max-width: 500px;
+            width: 100%; /* Ensure it scales properly on smaller screens */
             box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
             text-align: center;
         }
@@ -45,6 +46,7 @@
         .btn-container {
             display: flex;
             justify-content: space-around;
+            flex-wrap: wrap; /* Make sure buttons are wrapped on smaller screens */
         }
 
         .login-btn {
@@ -58,7 +60,7 @@
             font-size: 16px;
             border-radius: 30px;
             cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.1s ease; /* Added transition for transform */
+            transition: background-color 0.3s ease, transform 0.1s ease;
             margin: 10px;
         }
 
@@ -95,10 +97,10 @@
         <p>Please choose your Registration Type</p>
 
         <div class="btn-container">
-            <!-- Civilian Login -->
+            <!-- Civilian Registration -->
             <a href="{% url 'CivilianRegister' %}" class="login-btn law-btn">Register as Civilian</a>
 
-            <!-- Law Enforcement Login -->
+            <!-- Law Enforcement Registration -->
             <a href="{% url 'LawEnforcementRegister' %}" class="login-btn law-btn">Register as Law Enforcement</a>
         </div>
     </div>
