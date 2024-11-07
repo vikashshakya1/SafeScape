@@ -10,6 +10,29 @@
     <!-- Leaflet CSS for the map -->
     <link rel="stylesheet" href="{% static 'css/leaflet.css' %}" />
     <link rel="icon" href="{% static 'images/icon.webp' %}" type="image/webp">
+    <style>
+        .podcast-gallery {
+        display: flex;
+        gap: 10px;
+        overflow-x: scroll;
+        padding: 20px;
+      }
+      
+      .podcast-item {
+        flex: 0 0 auto;
+        width: 300px;
+        height: 300px;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      
+      .podcast-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -81,7 +104,27 @@
             <button class="arrow-btn news-left" aria-label="Scroll left">&larr;</button>
             <div class="carousel-content">
                 <div class="carousel-items" id="news-container">
-                    <!-- News articles will be populated here -->
+                    <!-- Static Images for Trending News -->
+                    <div class="news-item">
+                        <img src="{% static "C:\Users\suraj_r3os3ti\OneDrive\Desktop\aplha.jpg" %}" alt="News Image 1" class="news-image">
+                        <p class="news-title">Crime Update 1</p>
+                    </div>
+                    <div class="news-item">
+                        <img src="{% static 'images/news2.jpg' %}" alt="News Image 2" class="news-image">
+                        <p class="news-title">Crime Update 2</p>
+                    </div>
+                    <div class="news-item">
+                        <img src="{% static 'images/news3.jpg' %}" alt="News Image 3" class="news-image">
+                        <p class="news-title">Crime Update 3</p>
+                    </div>
+                    <div class="news-item">
+                        <img src="{% static 'images/news4.jpg' %}" alt="News Image 4" class="news-image">
+                        <p class="news-title">Crime Update 4</p>
+                    </div>
+                    <div class="news-item">
+                        <img src="{% static 'images/news5.jpg' %}" alt="News Image 5" class="news-image">
+                        <p class="news-title">Crime Update 5</p>
+                    </div>
                 </div>
             </div>
             <button class="arrow-btn news-right" aria-label="Scroll right">&rarr;</button>
@@ -92,6 +135,25 @@
     <section id="news-detail" style="display: none;">
         <!-- Detailed news content will be inserted here -->
     </section>
+
+    <div class="podcast-gallery">
+        <div class="podcast-item">
+          <img src="https://static01.nyt.com/images/2015/09/04/world/MUMBAI/MUMBAI-master1050.jpg" alt="Podcast 1">
+        </div>
+        <div class="podcast-item">
+          <img src="https://static01.nyt.com/images/2016/06/18/world/18INDIA-web1/18INDIA-web1-superJumbo.jpg" alt="Podcast 2">
+        </div>
+        <div class="podcast-item">
+          <img src="https://gdb.voanews.com/394de85c-cbd3-4803-9eb2-5f5eb7c4a189_w1200_r1.jpg" alt="Podcast 3">
+        </div>
+        <div class="podcast-item">
+          <img src="https://static01.nyt.com/images/2013/03/22/world/0322INDIA/0322INDIA-jumbo.jpg" alt="Podcast 4">
+        </div>
+        <div class="podcast-item">
+          <img src="https://en.shafaqna.com/wp-content/uploads/2022/10/FotoJet-7-38-635x430-1.jpg" alt="Podcast 5">
+        </div>
+      </div>
+      
 
     <!-- Crime Podcasts Section -->
     <section class="crime-podcasts" aria-labelledby="podcast-heading">
@@ -108,7 +170,7 @@
     </section>
 
     <!-- Latest Investigations Section -->
-    <section class="latest-investigations" aria-labelledby="investigation-heading">
+     <section class="latest-investigations" aria-labelledby="investigation-heading">
         <h2 id="investigation-heading">Latest Investigations</h2>
         <div class="carousel-container investigation-carousel">
             <button class="arrow-btn investigation-left" aria-label="Scroll left">&larr;</button>
@@ -120,6 +182,35 @@
             <button class="arrow-btn investigation-right" aria-label="Scroll right">&rarr;</button>
         </div>
     </section>
+
+   <div class="podcast-gallery">
+  <div class="podcast-item">
+    <a href="https://www.indiatoday.in/crime/story/uttar-pradesh-minor-girl-kidnapped-raped-for-two-months-rescued-from-karnataka-2447528-2023-10-11" target="_blank">
+      <img src="https://akm-img-a-in.tosshub.com/indiatoday/images/story/media_bank/202310/tripura-court-sentences-man-to-20-years-in-rigorous-imprisonment-for-minor-rape-case-062125907-16x9_0.jpg?VersionId=PE0E9.7G7LDTXAzaAJuH7bh5z_joE_GE&size=690:388" alt="Podcast 1">
+    </a>
+  </div>
+  <div class="podcast-item">
+    <a href="https://indianexpress.com/article/cities/delhi/anticipatory-bail-not-granted-as-matter-of-routine-custodial-interrogation-more-effective-mode-delhi-hc-8353412/" target="_blank">
+      <img src="https://images.indianexpress.com/2022/12/delhi-hc-1-1.jpeg?w=640" alt="Podcast 2">
+    </a>
+  </div>
+  <div class="podcast-item">
+    <a href="https://indianexpress.com/article/cities/kolkata/cattle-smuggling-case-arrest-warrants-issued-against-three-nephews-of-prime-accused-8169583/" target="_blank">
+      <img src="https://images.indianexpress.com/2022/09/arrest-2-7-5-15.jpeg?w=270" alt="Podcast 3">
+    </a>
+  </div>
+  <div class="podcast-item">
+    <a href="https://indianexpress.com/article/cities/mumbai/dgp-sanctions-aid-to-police-station-officers-for-crime-investigation/" target="_blank">
+      <img src="https://images.indianexpress.com/2015/05/sajeevdayal-thumb.jpg?w=270" alt="Podcast 4">
+    </a>
+  </div>
+  <div class="podcast-item">
+    <a href="https://indianexpress.com/article/news-archive/web/sc-spreads-its-media-gaze-from-court-to-crime-to-contempt-2/" target="_blank">
+      <img src="https://images.indianexpress.com/2012/04/m_id_280476_fp.jpg?w=270" alt="Podcast 5">
+    </a>
+  </div>
+</div>
+
 
     <!-- Interactive Map Section -->
     <section class="interactive-map" aria-labelledby="map-heading">
